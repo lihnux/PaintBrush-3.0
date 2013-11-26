@@ -1,0 +1,63 @@
+/**
+ * Copyright 2007-2010 Soggy Waffles. All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification, are
+ * permitted provided that the following conditions are met:
+ * 
+ *    1. Redistributions of source code must retain the above copyright notice, this list of
+ *       conditions and the following disclaimer.
+ * 
+ *    2. Redistributions in binary form must reproduce the above copyright notice, this list
+ *       of conditions and the following disclaimer in the documentation and/or other materials
+ *       provided with the distribution.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY SOGGY WAFFLES ``AS IS'' AND ANY EXPRESS OR IMPLIED
+ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+ * FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL SOGGY WAFFLES OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
+ * The views and conclusions contained in the software and documentation are those of the
+ * authors and should not be interpreted as representing official policies, either expressed
+ * or implied, of Soggy Waffles.
+ */
+
+
+#import <Cocoa/Cocoa.h>
+
+extern NSString * const kSWCurrentFileType;
+
+@interface SWSavePanelAccessoryViewController : NSViewController {
+	// We maintain a different view for certain fileTypes, as well as a default one
+	IBOutlet NSView *defaultView;
+	IBOutlet NSView *jpegView;
+	
+	// This is the slot they can go in
+	IBOutlet NSView *containerView;
+	
+	// The currently-selected filetype -- used for KVO
+	NSString *currentFileType;
+	
+	// The controls in our views -- we start with the global popup button
+	IBOutlet NSPopUpButton *fileTypeButton;
+	
+	// Used in the various subviews
+	BOOL isAlphaEnabled;
+	CGFloat imageQuality;
+}
+
+- (void)updateViewForFileType:(NSString *)fileType;
+- (NSView *)viewForFileType:(NSString *)fileType;
+- (IBAction)fileTypeDidChange:(id)sender;
+
+@property (retain) NSString *currentFileType;
+
+// These values are bound (binded?) to the controls in the various subviews
+@property (assign) BOOL isAlphaEnabled;
+@property (assign) CGFloat imageQuality;
+
+@end
